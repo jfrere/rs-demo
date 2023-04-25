@@ -32,22 +32,24 @@ fn main() {
             Ok(Action::Quit) => break,
             Ok(Action::List) => {
                 for todo in state.list() {
-                    println!("    {}", todo);
+                    println!("    {todo}");
                 }
             }
             Ok(Action::MarkDone(id)) => {
-                let todo = state.mark_done(id);
-                println!("    {}", todo);
+                match state.mark_done(id) {
+                    Some(todo) => println!("    {todo}"),
+                    None => println!("    no todo found with id {id}"),
+                };
             }
             Ok(Action::Add(text)) => {
                 let todo = state.add(text);
                 println!("    {}", todo);
             }
-            Ok(Action::Remove(id)) => {
-                let todo = state.remove(id);
-                println!("    removed {}", todo.text);
-            }
-            Err(error) => println!("Error in input: {}", error),
+            Ok(Action::Remove(id)) => match state.remove(id) {
+                Some(todo) => println!("    removed {}", todo.text),
+                None => println!("    no todo found with id {id}"),
+            },
+            Err(error) => println!("Error in input: {error}"),
         }
     }
 }
@@ -114,7 +116,7 @@ fn get_action() -> Result<Action, String> {
 fn tokenize(tokens: usize, input: &str) -> impl Iterator<Item = &str> {
     input
         .splitn(tokens + 1, char::is_whitespace)
-        .filter(|s| s.is_empty())
+        .filter(|s| !s.is_empty())
         .map(|s| s.trim())
 }
 

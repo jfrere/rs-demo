@@ -29,15 +29,15 @@ impl State {
         self.todos.last().unwrap()
     }
 
-    pub fn remove(&mut self, id: usize) -> Todo {
-        let index = self.todos.iter().position(|todo| todo.id == id).unwrap();
-        self.todos.remove(index)
+    pub fn remove(&mut self, id: usize) -> Option<Todo> {
+        let index = self.todos.iter().position(|todo| todo.id == id)?;
+        Some(self.todos.remove(index))
     }
 
-    pub fn mark_done(&mut self, id: usize) -> &Todo {
-        let index = self.todos.iter().position(|todo| todo.id == id).unwrap();
+    pub fn mark_done(&mut self, id: usize) -> Option<&Todo> {
+        let index = self.todos.iter().position(|todo| todo.id == id)?;
         self.todos[index].done = true;
-        &self.todos[index]
+        Some(&self.todos[index])
     }
 }
 
@@ -94,11 +94,11 @@ mod tests {
         let todo = state.remove(2);
         assert_eq!(
             todo,
-            Todo {
+            Some(Todo {
                 id: 2,
                 text: "Buy eggs".to_owned(),
                 done: false
-            }
+            })
         );
         assert_eq!(
             state.list(),
