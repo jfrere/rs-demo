@@ -11,7 +11,7 @@ pub struct TimeEntry {
     pub description: String,
 }
 
-const ENTRY_PATH: &'static str = "/tmp/time_tracking.json";
+const ENTRY_PATH: &str = "/tmp/time_tracking.json";
 
 pub fn load_entries() -> Result<Vec<TimeEntry>, anyhow::Error> {
     let file = std::fs::File::open(ENTRY_PATH)

@@ -16,7 +16,7 @@ fn main() {
 
         // (3) What happens if the program is run with a bad stdin?
         // (e.g. `cargo run < /tmp`, where /tmp is a directory)
-        // Which function is causing this to happen?
+        // Which of the following lines is causing this to happen?
         io::stdin()
             .read_line(&mut guess)
             .expect("Failed to read line");

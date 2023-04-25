@@ -1,6 +1,7 @@
 mod entries;
 
 use clap::Parser;
+use entries::save_entries;
 
 #[derive(clap::Parser, Debug)]
 #[command(author, version, about, long_about = None)]
