@@ -26,10 +26,12 @@ fn main() {
 
     match &args.command {
         Command::Add { /* TODO */ } => {
-            unimplemented!()
+            // TODO!
         }
         Command::Show { /* TODO */ } => {
-            unimplemented!()
+            // TODO!
         }
     }
+
+    save_entries(&entries).unwrap();
 }

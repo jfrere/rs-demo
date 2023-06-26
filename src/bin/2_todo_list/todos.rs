@@ -1,4 +1,4 @@
-use std::fmt::Display;
+use std::fmt::{self, Display};
 
 #[derive(Debug, Default)]
 pub struct State {
@@ -55,12 +55,14 @@ impl Display for Todo {
     // (6) On line 9, we have a different block that starts with the keyword `impl`.
     // What is the difference between this block and that one?  And what is `Display`?
 
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let done = if self.done { "x" } else { " " };
         write!(f, "[{}] {} {}", done, self.id, self.text)
     }
 }
 
+// (7) Here we have some inline module tests.
+// How can we run them?
 #[cfg(test)]
 mod tests {
     use super::*;
