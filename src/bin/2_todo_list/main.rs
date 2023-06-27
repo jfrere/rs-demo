@@ -1,5 +1,4 @@
 mod todos;
-// (1) What is this line doing?  How does it relate to the `use todos::State;` line below?
 
 use std::num::ParseIntError;
 
@@ -59,13 +58,8 @@ fn get_action() -> Result<Action, String> {
     std::io::stdin()
         .read_line(&mut input)
         .map_err(|err| err.to_string())?;
-    // (2) Why do we need `map_err` here?
-    // (3) Based on the discussion we had about error handling, what
-    // alternative ways could we handle this error?
 
     let mut tokens = tokenize(1, &input);
-    // (4) `tokenize` returns an Iterator, which is a trait.  What is a trait?
-    // Where is the documentation for the `Iterator` trait?
 
     match tokens.next() {
         Some("help" | "h") => Ok(Action::Help),
@@ -119,23 +113,3 @@ fn tokenize(tokens: usize, input: &str) -> impl Iterator<Item = &str> {
         .filter(|s| !s.is_empty())
         .map(|s| s.trim())
 }
-
-// Extensions
-// ----------
-//
-// As mentioned before, the tokenize function returns something that implements the trait
-// `Iterator`, but this is just the general interface type.  What is the concrete type that
-// will get returned by this function?  How can we find this out?
-// Hint: you can do this using your IDE, or by forcing the compiler to reveal its secrets.
-//
-// ---
-//
-// Currently we can only mark a Todo as being done.  Extend the `mark_done` action
-// so that it takes a second argument, either "true" or "false", to explicitly set the state
-// of the Todo.  For example, `mark_done 1 false` would mark the Todo with id 1 as not done.
-//
-// To implement this, a few changes need to happen:
-// 1. The Action::MarkDone variant needs to carry to pieces of information: the id and the new state.
-// 2. The `get_action` function needs to be able to parse the second argument.
-// 3. The `mark_done` method on `State` needs to take an extra argument.
-//

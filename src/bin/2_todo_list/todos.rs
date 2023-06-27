@@ -42,9 +42,6 @@ impl State {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-// (5) What does the `derive` attribute do?
-// What do the `Debug`, `Clone`, `PartialEq`, and `Eq` traits do?
-// What is the difference between PartialEq and Eq?
 pub struct Todo {
     id: usize,
     pub text: String,
@@ -52,17 +49,12 @@ pub struct Todo {
 }
 
 impl Display for Todo {
-    // (6) On line 9, we have a different block that starts with the keyword `impl`.
-    // What is the difference between this block and that one?  And what is `Display`?
-
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let done = if self.done { "x" } else { " " };
         write!(f, "[{}] {} {}", done, self.id, self.text)
     }
 }
 
-// (7) Here we have some inline module tests.
-// How can we run them?
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -119,25 +111,3 @@ mod tests {
         );
     }
 }
-
-// Extensions
-// ----------
-//
-// 1. Test the `mark_done` method.
-// 2. Tests involve writing the word "test" out a lot of times!
-//    * `#[cfg(test)]`
-//    * `mod tests { ... }`
-//    * `#[test]`
-//    What is the purpose of each of these lines?  What are they telling the compiler?
-//
-// ---
-//
-// The function signatures of `add(...)` and `mark_done(...)` both return the type `&Task`,
-// but the function signature of `remove(...)` returns the type `Task`.  What is the difference
-// between the two types, and why does `remove(...)` have to return `Task` instead of `&Task`?
-//
-// ---
-//
-// What is the difference between the keyword `mod` as used in this file, and `mod` as used in `main.rs`?
-// (And also what are the similarities?)
-//
